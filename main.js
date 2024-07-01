@@ -24,37 +24,41 @@ function solve(code) {
     return [3, 2, 0, 3, 1, 0, 3, 1, 2, 3, 1, 2, 0, 1, 2, 0][code % 16]; // jk
 }
 
+
+function success(decodedText, _) {
+    let code = parseInt(decodedText);
+    let solution = solve(code);
+    for (let i = 0; i < 4; i++)
+        cells[i].innerHTML = i == solution ? "<i class='fa-solid fa-gift color1'></i>" : ""
+    result.classList.remove("transparent");
+    info.classList.remove("transparent");
+}
+
+function error(err) {
+    // console.log(err)
+}
+
 function startCamera() {
     if (!(devices?.length) || html5QrCode == undefined)
         return;
 
-    html5QrCode.start(
-        devices[cameraIndex % devices.length].id,
-        {
-            fps: 7,
-            qrbox: {
-                width: 400,
-                height: 300
-            }
-        },
-        (decodedText, _) => {
-            let code = parseInt(decodedText);
-            let solution = solve(code);
-            for (let i = 0; i < 4; i++)
-                cells[i].innerHTML = i == solution ? "<i class='fa-solid fa-gift color1'></i>" : ""
-            result.classList.remove("transparent");
-            info.classList.remove("transparent");
-        },
-        (err) => {
-            // console.log(err)
-        })
-        .catch((err) => {
-            // console.log(err)
-        });
+    const camera = devices[cameraIndex % devices.length].id;
+    const config = {
+        fps: 7,
+        qrbox: {
+            width: 400,
+            height: 300
+        }
+    };
+
+    html5QrCode.start(camera, config, success, error).catch((err) => {
+        // console.log(err)
+    });
 }
 
 cam.addEventListener("click", () => {
     cameraIndex += 1;
+    html5QrCode.stop();
     setupCamera();
 });
 
