@@ -6,40 +6,14 @@ for (let i = 0; i < 4; i++)
     cells.push(document.querySelector(`#cell${i}`))
 
 let cameraIndex = 0;
+let html5QrCode = undefined;
+let devices = undefined;
 
-function startCamera() {
-    Html5Qrcode.getCameras().then(devices => {
-        if (!(devices?.length)) return;
-
-        let index = cameraIndex % devices.length;
-        let cameraId = devices[index].id;
-
-        const html5QrCode = new Html5Qrcode("reader");
-
-        html5QrCode.start(
-            cameraId,
-            {
-                fps: 10,
-                qrbox: {
-                    width: 400,
-                    height: 300
-                }
-            },
-            (decodedText, _) => {
-                let code = parseInt(decodedText);
-                let solution = solve(code);
-                for (let i = 0; i < 4; i++)
-                    cells[i].innerHTML = i == solution ? "<i class='fa-solid fa-gift color1'></i>" : ""
-                result.classList.remove("transparent");
-                info.classList.remove("transparent");
-            },
-            (err) => {
-                console.log(err)
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-
+function setupCamera() {
+    Html5Qrcode.getCameras().then(d => {
+        html5QrCode = new Html5Qrcode("reader");
+        devices = d;
+        startCamera();
     }).catch(err => {
         console.log(err)
     });
@@ -50,11 +24,53 @@ function solve(code) {
     return [3, 2, 0, 3, 1, 0, 3, 1, 2, 3, 1, 2, 0, 1, 2, 0][code % 16]; // jk
 }
 
+function startCamera() {
+    if (!(devices?.length) || html5QrCode == undefined)
+        return;
+
+    html5QrCode.start(
+        devices[cameraIndex % devices.length].id,
+        {
+            fps: 7,
+            qrbox: {
+                width: 400,
+                height: 300
+            }
+        },
+        (decodedText, _) => {
+            let code = parseInt(decodedText);
+            let solution = solve(code);
+            for (let i = 0; i < 4; i++)
+                cells[i].innerHTML = i == solution ? "<i class='fa-solid fa-gift color1'></i>" : ""
+            result.classList.remove("transparent");
+            info.classList.remove("transparent");
+        },
+        (err) => {
+            // console.log(err)
+        })
+        .catch((err) => {
+            // console.log(err)
+        });
+}
+
 cam.addEventListener("click", () => {
     cameraIndex += 1;
-    startCamera();
-})
-startCamera();
+    setupCamera();
+});
+
+function debounce(func) {
+    var timer;
+    return function (event) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(func, 300, event);
+    };
+}
+
+window.addEventListener("resize", debounce(function (e) {
+    setupCamera();
+}));
+
+setupCamera();
 
 document.body.addEventListener("click", () => {
     result.classList.add("transparent");

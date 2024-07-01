@@ -2,11 +2,16 @@ html,
 body,
 main,
 #reader {
+    overflow: hidden;
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
     font-family: "OpenSans", sans-serif;
+}
+
+#reader {
+    font-size: 4em;
 }
 
 .color1 {
