@@ -32,6 +32,14 @@ main,
     bottom: 50px;
 }
 
+#cam {
+    z-index: 10;
+    left: 50px;
+    top: 50px;
+    padding: 25px;
+    cursor: pointer;
+}
+
 #title {
     left: 50%;
     top: 50px;
