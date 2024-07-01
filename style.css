@@ -1,0 +1,31 @@
+html,
+body,
+main,
+#reader {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif;
+}
+
+#results {
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    border-radius: 5px;
+    position: absolute;
+    font-weight: bold;
+    font-size: xx-large;
+
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
