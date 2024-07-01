@@ -13,7 +13,7 @@ function setupCamera() {
     Html5Qrcode.getCameras().then(d => {
         html5QrCode = new Html5Qrcode("reader");
         devices = d;
-        startCamera();
+        setTimeout(startCamera, 500);
     }).catch(err => {
         console.log(err)
     });
