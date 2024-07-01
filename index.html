@@ -1,20 +1,29 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Coopait</title>
+    <title>coopay</title>
     <link href="./style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-
 <body>
+    <div id="title" class="overlay">
+        <span class="color1">co</span><span class="color2">op</span><span class="color1">ay</span>
+    </div>
     <main>
-        <div id="reader"></div>
-        <div id="results">
-            Result
+        <div id="info" class="overlay">Click to clear</div>
+        <div id="result" class="overlay opaque">
+            <div id="cell0"></div>
+            <div id="cell1"><i class="fa-solid fa-gift color1"></i></div>
+            <div id="cell2"></div>
+            <div id="cell3"></div>
         </div>
+        <div id="reader"></div>
     </main>
 </body>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
