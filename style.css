@@ -34,10 +34,11 @@ main,
 
 #cam {
     z-index: 10;
-    left: 50px;
-    top: 50px;
+    right: 50px;
+    bottom: 50px;
     padding: 25px;
     cursor: pointer;
+    transform: translate(50%, 50%);
 }
 
 #title {
